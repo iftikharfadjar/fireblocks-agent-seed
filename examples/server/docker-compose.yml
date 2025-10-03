@@ -1,0 +1,26 @@
+services:
+  customer-server:
+    image: softhsm2:2.6.1
+    depends_on:
+      - customer-database
+    environment:
+      NODE_ENV: production
+    volumes:
+      - softhsm:/usr/local/lib/softhsm/
+      - tokens:/tokens/
+    ports:
+      - 5000:5000
+      - 35729:35729
+  customer-database:
+    image: mongo:6
+    volumes:
+      - database:/data/db
+    ports:
+      - 27017:27017
+volumes:
+  database:
+    external: true
+  softhsm:
+    external: true
+  tokens:
+    external: true

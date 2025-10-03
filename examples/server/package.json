@@ -1,0 +1,45 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:api": "openapi-typescript ../../api/customer-server.api.yml -o ./src/customer-server.d.ts",
+    "build": "tsc",
+    "start": "NODE_ENV=dev node ./dist/server.js",
+    "docker:volumes": "docker volume create tokens && docker volume create softhsm && docker volume create database",
+    "start:dev": "NODE_ENV=dev nodemon ./src/server.ts",
+    "start:dev2": "node ./src/server.ts",
+    "dev": "ts-node ./src/server.ts",
+    "devnode": "node ./src/server.ts",
+    "build:docker": "npm run build:api && docker build -t softhsm2:2.6.1 .",
+    "start:docker": "npm run docker:volumes && docker compose up",
+    "initToken": "softhsm2-util --init-token --slot 0 --label test-token --pin 1234 --so-pin 4321",
+    "exportDER": "pkcs11-tool --module  /usr/local/lib/softhsm/libsofthsm2.so  --read-object --type pubkey --id 49b8e635db29a67cd7ea64ee2ec01d2d --output-file public_key.der",
+    "exportPEM": "openssl ec -inform DER -in public_key.der -pubin -outform PEM -out public_key.pem"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "asn1.js": "^5.4.1",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "helmet": "^7.1.0",
+    "mongodb": "6.3",
+    "morgan": "^1.10.0",
+    "nodemon": "^3.0.2",
+    "pkcs11js": "^2.1.1",
+    "ts-command-line-args": "^2.5.1",
+    "typescript": "^5.3.2",
+    "winston": "^3.11.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/morgan": "^1.9.9",
+    "@types/node": "^20.10.5",
+    "openapi-typescript": "^6.7.2",
+    "ts-node": "^10.9.2"
+  }
+}

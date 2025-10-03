@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "lib": ["ES2022"],
+    "module": "commonjs",
+    "target": "es2016",
+    "outDir": "./dist",
+    "baseUrl": "./src",
+    "skipLibCheck": true,   
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "../node_modules",
+    "src/**/*.test.ts"
+  ]
+}

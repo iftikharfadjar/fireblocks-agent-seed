@@ -1,0 +1,11 @@
+dist
+node_modules
+coverage
+.fireblocks-refresh-token*
+.env.dev*
+messages*.json
+*.log
+.DS_Store
+.vscode
+customer-server.d.ts
+.*-audit.json
